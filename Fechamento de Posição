@@ -1,0 +1,20 @@
+void Fechar()
+{
+   for (int i = PositionsTotal() - 1; i >= 0; i--)
+   {
+      ulong ticket = PositionGetTicket(i);
+      if (ticket > 0)
+      {
+         if (PositionGetString(POSITION_SYMBOL) == _Symbol && PositionGetInteger(POSITION_MAGIC) == magicNum
+         && PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_SELL)
+            if (trade.PositionClose(ticket, desvPts))
+               Print("ORDEM SELL " + IntegerToString(ticket) + " FECHADA COM SUCESSO! COM LUCRO DE: " + IntegerToString(POSITION_PROFIT) + " " + DoubleToString(inputRecuperacao) + "% recuperado");
+            else Print("ERRO AO FECHAR ORDEM SELL " + IntegerToString(ticket));
+         if (PositionGetString(POSITION_SYMBOL) == _Symbol && PositionGetInteger(POSITION_MAGIC) == magicNum
+         && PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_BUY)
+            if (trade.PositionClose(ticket,desvPts))
+               Print("ORDEM BUY " + IntegerToString(ticket) + " FECHADA COM SUCESSO! COM LUCRO DE: " + IntegerToString(POSITION_PROFIT) + " " + DoubleToString(inputRecuperacao) + "% recuperado");
+            else Print("ERRO AO FECHAR ORDEM BUY " + IntegerToString(ticket));
+      }
+   }
+}
