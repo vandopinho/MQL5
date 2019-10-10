@@ -1,0 +1,13 @@
+int Cruzamento()
+{
+   double MediaRapida[], MediaLenta[];
+   ArraySetAsSeries(MediaRapida, true);
+   ArraySetAsSeries(MediaLenta, true);
+   CopyBuffer(handleMediaRapida, 0, 0, 2, MediaRapida);
+   CopyBuffer(handleMediaLenta, 0, 0, 2, MediaLenta);
+   // Compra em caso de cruzamento da média Rapida para cima da média Lenta
+   if(MediaRapida[1] <= MediaLenta[1] && MediaRapida[0] > MediaLenta[0]) return 1;
+   // Venda em caso de cruzamento da média Rapida para baixo da média Lenta
+   if(MediaRapida[1] >= MediaLenta[1] && MediaRapida[0] < MediaLenta[0]) return -1;     
+   return 0;
+}
