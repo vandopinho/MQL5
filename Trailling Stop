@@ -1,0 +1,49 @@
+void TrailingStop(double preco)
+   {
+      for(int i = PositionsTotal()-1; i>=0; i--)
+         {
+            string symbol = PositionGetSymbol(i);
+            ulong magic = PositionGetInteger(POSITION_MAGIC);
+            if(symbol == _Symbol && magic==magicNum)
+               {
+                  ulong PositionTicket = PositionGetInteger(POSITION_TICKET);
+                  double StopLossCorrente = PositionGetDouble(POSITION_SL);
+                  double PrecoAbertura = PositionGetDouble(POSITION_PRICE_OPEN);
+                  double TakeProfitCorrente = PositionGetDouble(POSITION_TP);
+                  if(PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_BUY)
+                     {
+                        if(preco >= (PrecoAbertura + tstopNormalizado))
+                           {
+                              double novoSL = NormalizeDouble((preco - tstepNormalizado), _Digits);
+                              if(novoSL<=StopLossCorrente) return;
+                              if(trade.PositionModify(PositionTicket, novoSL, TakeProfitCorrente))
+                                 {
+                                 verificaTS = true;
+                                    Print("TrailingStop - sem falha. ResultRetcode: ", trade.ResultRetcode(), ", RetcodeDescription: ", trade.ResultRetcodeDescription());
+                                 }
+                              else
+                                 {
+                                    Print("TrailingStop - com falha. ResultRetcode: ", trade.ResultRetcode(), ", RetcodeDescription: ", trade.ResultRetcodeDescription());
+                                 }
+                           }
+                     }
+                  else if(PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_SELL)
+                     {
+                        if(preco <= (PrecoAbertura - tstopNormalizado))
+                           {
+                              double novoSL = NormalizeDouble((preco+ tstepNormalizado), _Digits);
+                              if(novoSL>=StopLossCorrente) return;
+                              if(trade.PositionModify(PositionTicket, novoSL, TakeProfitCorrente))
+                                 {
+                                 verificaTS = true;
+                                    Print("TrailingStop - sem falha. ResultRetcode: ", trade.ResultRetcode(), ", RetcodeDescription: ", trade.ResultRetcodeDescription());
+                                 }
+                              else
+                                 {
+                                    Print("TrailingStop - com falha. ResultRetcode: ", trade.ResultRetcode(), ", RetcodeDescription: ", trade.ResultRetcodeDescription());
+                                 }
+                           }
+                     }
+               }
+         }
+   }
