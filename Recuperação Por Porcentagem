@@ -1,0 +1,16 @@
+void recuperarPorcentagem(){
+   double porcentagem = NormalizeDouble(inputRecuperacao*0.01,2);
+   double saldoRecuperado =  NormalizeDouble((saldoPerdedor + (saldoPerdedor*porcentagem))*-1,2);
+   for(int i = PositionsTotal()-1; i>=0; i--) {
+            string symbol = PositionGetSymbol(i);
+            ulong magic = PositionGetInteger(POSITION_MAGIC);
+            if(symbol == _Symbol && magic==magicNum)
+               {
+                  ulong PositionTicket = PositionGetInteger(POSITION_TICKET);
+                  double ProfitAtual = PositionGetDouble(POSITION_PROFIT);
+                  if(ProfitAtual >= saldoRecuperado){  
+                     Fechar();   
+                  }
+                }
+   }
+}
