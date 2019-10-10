@@ -1,0 +1,9 @@
+double NormalizeVolume(double volume)
+{
+   static const double min  = SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_MIN);
+   static const double max  = SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_MAX);
+   static const int digits  = (int)-MathLog10(SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_STEP));
+   if (volume < min) volume = min;
+   if (volume > max) volume = max;
+   return NormalizeDouble(volume, digits);
+}
