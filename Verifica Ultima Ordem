@@ -1,0 +1,15 @@
+int verificaOrdem()
+{
+   if(!HistorySelect(0, TimeCurrent())) return 0;
+   int total = HistoryDealsTotal();
+   ENUM_DEAL_TYPE deal_type;
+   for(int i=0; i<total; i++)
+  {
+      ulong ticket = HistoryDealGetTicket(i);
+      if((ENUM_DEAL_ENTRY)HistoryDealGetInteger(ticket, DEAL_ENTRY) != DEAL_ENTRY_IN) continue;
+      deal_type = (ENUM_DEAL_TYPE)HistoryDealGetInteger(ticket, DEAL_TYPE);
+   }
+   if(deal_type == DEAL_TYPE_BUY) return 1;
+   if(deal_type == DEAL_TYPE_SELL) return -1;
+   return 0;
+}
