@@ -1,0 +1,14 @@
+bool confereOperacaoManual(){
+   ulong ticket = OrderGetTicket(OrdersTotal()-1);
+   string symbol= OrderGetString(ORDER_SYMBOL);
+   if(symbol==Symbol())
+   {
+      ENUM_ORDER_REASON orderReason=(ENUM_ORDER_REASON)HistoryOrderGetInteger(ticket, ORDER_REASON);
+      if (orderReason == ORDER_REASON_CLIENT || orderReason == ORDER_REASON_MOBILE || orderReason == ORDER_REASON_WEB)
+      {
+         comentar = "Última ordem lançada manualmente";
+         return true;
+      } 
+   }
+   return false;
+}
