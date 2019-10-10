@@ -1,0 +1,37 @@
+bool Conferir_Dia_Horario () {
+   MqlDateTime dataSt;
+   TimeToStruct(TimeCurrent(),dataSt);
+   switch (dataSt.day_of_week) {
+      case 0: return AuxDataHora(0,HorarioInicioDom1,HorarioFinalDom1);
+      case 1: return AuxDataHora(1,HorarioInicioSeg1,HorarioFinalSeg1);
+      case 2: return AuxDataHora(2,HorarioInicioTer1,HorarioFinalTer1);
+      case 3: return AuxDataHora(3,HorarioInicioQua1,HorarioFinalQua1);
+      case 4: return AuxDataHora(4,HorarioInicioQui1,HorarioFinalQui1);
+      case 5: return AuxDataHora(5,HorarioInicioSex1,HorarioFinalSex1);
+      default: return false;
+   };
+}
+
+bool AuxDataHora (int diaSemana, string useHorarioInicio1, string useHorarioFim1) {
+   
+   if ((diaSemana == 0 && OperarDomingo == false) || (diaSemana == 1 && OperarSegunda == false) || (diaSemana == 2 && OperarTerca == false)
+   || (diaSemana == 3 && OperarQuarta == false) || (diaSemana == 4 && OperarQuinta == false) || (diaSemana == 5 && OperarSexta == false))
+   {
+      comentarHorario = "========= DIA NÃO OPERÁVEL =========";
+      return false;
+   }
+   
+   if (ConferirHorario(useHorarioInicio1,useHorarioFim1))
+      return true;
+      
+   comentarHorario = "========= FORA DO HORÁRIO DE NEGOCIAÇÃO =========";
+   return false;
+}
+
+bool ConferirHorario (string HorarioStart, string HorarioEnd) {
+   if ((TimeToString(TimeCurrent(),TIME_MINUTES) >= HorarioStart && TimeToString(TimeCurrent(),TIME_MINUTES) <= HorarioEnd && HorarioEnd > HorarioStart)
+   || ((TimeToString(TimeCurrent(),TIME_MINUTES) >= HorarioStart || TimeToString(TimeCurrent(),TIME_MINUTES) <= HorarioEnd) && HorarioEnd < HorarioStart))
+      return true;
+      
+   return false;
+}
