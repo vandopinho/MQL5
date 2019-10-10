@@ -1,0 +1,13 @@
+bool ConferirIntervalo (){
+   MqlDateTime dataPausa;
+   TimeToStruct(TimeCurrent(), dataPausa);
+   MqlDateTime inicioPeriodo,finalPeriodo;
+   TimeToStruct(intervaloInicio,inicioPeriodo);
+   TimeToStruct(intervaloFinal, finalPeriodo);
+   if((dataPausa.day >= inicioPeriodo.day && dataPausa.mon >= inicioPeriodo.mon) 
+         && (dataPausa.day <=  finalPeriodo.day && dataPausa.mon <= finalPeriodo.mon))
+    {
+      return true;
+    }
+    return false;
+  }
