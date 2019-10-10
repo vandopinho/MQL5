@@ -1,0 +1,29 @@
+CTrade trade;
+CSymbolInfo simbolo;
+input bool operarBolsa = false;
+
+void Compra()
+{
+   double price;
+   price = simbolo.Ask(); 
+   simbolo.Refresh();
+   double stoploss = simbolo.NormalizePrice(price - stoplossInput*_Points); 
+   double takeprofit = simbolo.NormalizePrice(price + takeprofitInput*_Points);
+   NormalizeVolume(volume);
+   int volumeBolsa = round(volume);
+   if(operarBolsa) volume = volumeBolsa;
+   trade.Buy(volume, NULL, 0, stoploss, takeprofit, "Ordem de Compra Aberta nº: "+IntegerToString(numOrdemAberta)); 
+}
+
+void Venda()
+{
+   double price;
+   price = simbolo.Bid(); 
+   simbolo.Refresh();
+   double stoploss = simbolo.NormalizePrice(price + stoplossInput*_Points); 
+   double takeprofit = simbolo.NormalizePrice(price - takeprofitInput*_Points);
+   NormalizeVolume(volume); 
+   int volumeBolsa = round(volume);
+   if(operarBolsa) volume = volumeBolsa;
+   trade.Sell(volume, NULL, 0, stoploss, takeprofit, "Ordem de Venda Aberta nº: "+IntegerToString(numOrdemAberta)); 
+}
