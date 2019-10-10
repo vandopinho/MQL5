@@ -1,0 +1,11 @@
+    static datetime today;
+    if (today != iTime (Symbol(), PERIOD_D1, 0)){
+        today = iTime (Symbol(), PERIOD_D1, 0);
+        //código
+     }
+     
+   static datetime mes;
+   if (mes != iTime (Symbol(), PERIOD_MN1, 0)){
+       mes = iTime (Symbol(), PERIOD_MN1, 0); 
+        //código
+       }
