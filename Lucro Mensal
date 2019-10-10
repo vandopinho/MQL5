@@ -1,0 +1,42 @@
+void confereLucroMensal (){
+   static datetime mes;
+   if (mes != iTime (Symbol(), PERIOD_MN1, 0)){
+       mes = iTime (Symbol(), PERIOD_MN1, 0); 
+       lucroMensal = 0.0;
+   }
+   HistorySelect(mes, TimeCurrent()); 
+   int deals=HistoryDealsTotal();
+   double result=0;
+   double profit=0;
+   double loss=0;
+   for(int i=0;i<deals;i++)
+     {
+      ulong deal_ticket=HistoryDealGetTicket(i);
+      if(deal_ticket>0)
+        {
+         string symbol             =HistoryDealGetString(deal_ticket,DEAL_SYMBOL);
+         datetime time             =(datetime)HistoryDealGetInteger(deal_ticket,DEAL_TIME);
+         ulong order               =HistoryDealGetInteger(deal_ticket,DEAL_ORDER);
+         long order_magic          =HistoryDealGetInteger(deal_ticket,DEAL_MAGIC);
+         long pos_ID               =HistoryDealGetInteger(deal_ticket,DEAL_POSITION_ID);
+         ENUM_DEAL_ENTRY entry_type=(ENUM_DEAL_ENTRY)HistoryDealGetInteger(deal_ticket,DEAL_ENTRY);
+         if(order_magic==magicNum)
+           { 
+            if(symbol==_Symbol)
+              {
+                  result=HistoryDealGetDouble(deal_ticket,DEAL_PROFIT);
+                   if(result>0)
+                     {
+                        profit+=result;
+                     }
+                     if(result<0)
+                     {
+                        loss+= -result;
+                     }
+              }
+           }
+
+        }
+   }
+   lucroMensal = profit -loss;
+}
