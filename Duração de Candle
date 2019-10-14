@@ -26,7 +26,8 @@ int GetMinute()
      }
    return(1);
   }
-  
+   MqlTick ultimoTick;
+   MqlRates rates[];
    SymbolInfoTick(Symbol(),ultimoTick);
    if(CopyRates(Symbol(),PERIOD_CURRENT,0,1,rates)<1)return;
    double i;
