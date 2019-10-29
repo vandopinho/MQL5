@@ -1,0 +1,3 @@
+MqlTick primeiroTick[];
+int nTicks = CopyTicks(Symbol(),primeiroTick,COPY_TICKS_TRADE,1000*86400*(TimeCurrent()/86400),1);
+
