@@ -1,0 +1,18 @@
+//Inicialize a variável que ira armazenar o AccountNumber
+
+  int sAccount;
+
+
+
+//Vamos fazer uma verificação simples por comparação;
+ 
+  sAccount = AccountInfoInteger(ACCOUNT_LOGIN);
+   
+  int sUserAccount = 666666; //Conta a ser liberada
+  bool sLiberado = false;    //GatilhoTrueFalse 
+
+  if(sAccount == 666666) {SLiberado = true;} 
+   
+
+
+//Verifique o gatilho no seu escopo para executar as funções;
