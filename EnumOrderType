@@ -1,0 +1,6 @@
+enum enumTipoInicial
+   {
+    Buy,     
+    Sell      
+   };
+input enumTipoInicial tipoInicial   = Buy;  // Tipo de Ordem Inicial
