@@ -1,0 +1,35 @@
+A maior parte dos traders que operam com robôs, tanto no mercado Forex, como no mercado BM&FBovespa, geralmente focam apenas no lado bom, que é o potencial de lucro que um bom Expert Advisor pode apresentar.
+
+Isso conduz todo o foco da complexidade dos robôs nos algoritmos das estratégias, baseadas em boas experiências obtidas na operação manual.
+
+Entretanto, nem tudo são flores e a falta de preocupação com a complexidade e problemas de operar em conta real com robôs, sem uma adequada análise dos riscos, pode levar a resultados totalmente diversos dos esperados.
+
+A operação com sistemas automáticos é muito mais complexa e oferece muito mais riscos para o trader, que vão muito além da simples automação de uma estratégia.
+
+Os riscos aumentam ainda mais no mercado BM&FBovespa, onde o MT5 é absolutamente novo e um projeto piloto. 
+
+Para facilitar esse entendimento, descrevo nesse tópico um checklist de verificação que considero mínimo para um Expert Advisor, antes de operar em conta real. 
+
+Existe tratamento para todas as situações de exceção das funções chamadas internamente pelo EA?
+O fechamento de posições é garantidamente realizado antes da abertura de uma nova posição contrária utilizando um mesmo lote?
+Foram feitos testes de situações de latência em conta real que não são visualizadas nas simulações em contas demonstração e no backtesting?
+Existe limitação de lote encaminhado por falha ou erro do EA?
+Existe limitação de margem e saldo em conta para operação, principalmente no caso de falha ou erro do EA?
+Existe tratamento para situações de exceção de conectividade ou de disponibilidade do sistema operacional e da plataforma?
+O robô consegue operar por mais de 5 dias consecutivos de forma totalmente automática sem necessitar intervenções manuais?
+Existe verificação e controle das ordens executadas e das situações de exceção na comunicação com o servidor da corretora?
+Existe definição de limites operacionais e análise das posições atuais no que se refere à adequação às situações limites definidas?
+Existe um modo de pânico no Expert Advisor para administrar situações de risco de perda de capital por falhas ou erros dos algoritmos?
+Você compara os trades executados pela plataforma MT5 e pelo home-broker?
+Existe controle de risco para operações sem limite de perda, como abertura de venda a seco de opções?
+Existe proteção contra falhas nos valores dos preços recebidos para os instrumentos financeiros, como por exemplo valores zerados ou com erros grosseiros?
+Existe proteção contra mudanças abruptas de volumes e preços dos instrumentos financeiros?
+Existe limitação de perda máxima a partir de uma sequencia de StopLoss?
+Existe proteção contra quedas ou indisponibilidade do servidor MT5 na corretora?
+Existe proteção de limite nos loops do código fonte?
+O código fonte que você está utilizando já foi testado em conta real na BM&FBovespa?
+O código fonte foi testado em contas no modo netting e hedging?
+Existem proteções contra falhas de outros robôs, se esses forem colocados em paralelo, por engano ou propositalmente, com seu robô?
+Essa lista não fecha o escopo para toda e qualquer situação de risco operando com robôs, mas acredito que já seja um bom começo.
+
+Se você criou um robô para operar no mercado e a resposta não é um “sim” com segurança para todos os itens, recomendo você revisar novamente o código fonte de seu robô e ficar fora do mercado real, até estar totalmente adequado e confortável com esse checklist.
