@@ -1,0 +1,36 @@
+bool AutorizaSLTP(ENUM_ORDER_TYPE type,double SL,double TP)
+{
+   int stops_level=(int)SymbolInfoInteger(_Symbol,SYMBOL_TRADE_STOPS_LEVEL);
+   if(stops_level!=0)
+     {
+      SendMail("A conta: "+ IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) + "está com SL/TP inválidos", "o stop level desse ativo é: "+ IntegerToString(stops_level)+ "então o  StopLoss e TakeProfit devem ser pelo menos" +IntegerToString(stops_level)+ " pontos a partir do preço de fechamento");
+     }
+   bool SL_check=false,TP_check=false;
+   switch(type)
+     {
+      case  ORDER_TYPE_BUY:
+        {
+        double Bid = simbolo.Bid();
+         SL_check=(Bid-SL>stops_level*_Point);
+         if(!SL_check)
+            SendMail("A conta: " + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+", apontou um problema no StopLoss.", "Para uma ordem de Compra, o SL: " +IntegerToString(SL)+ ", deve ser pelo menos de: "+ IntegerToString(Bid-stops_level*_Point)+ ", considere que o cálculo do valor é: Bid("+IntegerToString(Bid)+") - SYMBOL_TRADE_STOPS_LEVEL: ("+ IntegerToString(stops_level)+")");
+         TP_check=(TP-Bid>stops_level*_Point);
+         if(!TP_check)
+            SendMail("A conta: " + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+", apontou um problema no TakeProfit.", "Para uma ordem de Compra, o TP: " +IntegerToString(TP)+ ", deve ser pelo menos de: "+ IntegerToString(Bid+stops_level*_Point)+ ", considere que o cálculo do valor é: Bid("+IntegerToString(Bid)+") + SYMBOL_TRADE_STOPS_LEVEL: ("+ IntegerToString(stops_level)+")");
+         return(SL_check&&TP_check);
+        }
+      case  ORDER_TYPE_SELL:
+        {
+         double Ask = simbolo.Ask();
+         SL_check=(SL-Ask>stops_level*_Point);
+         if(!SL_check)
+            SendMail("A conta: " + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+", apontou um problema no StopLoss.", "Para uma ordem de Venda, o SL: " +IntegerToString(SL)+ ", deve ser pelo menos de: "+ IntegerToString(Ask+stops_level*_Point)+ ", considere que o cálculo do valor é: Ask("+IntegerToString(Ask)+") + SYMBOL_TRADE_STOPS_LEVEL: ("+ IntegerToString(stops_level)+")");
+         TP_check=(Ask-TP>stops_level*_Point);
+         if(!TP_check)
+            SendMail("A conta: " + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+", apontou um problema no TakeProf.", "Para uma ordem de Venda, o TP: " +IntegerToString(TP)+ ", deve ser pelo menos de: "+ IntegerToString(Ask-stops_level*_Point)+ ", considere que o cálculo do valor é: Ask("+IntegerToString(Ask)+") - SYMBOL_TRADE_STOPS_LEVEL: ("+ IntegerToString(stops_level)+")");
+         return(TP_check&&SL_check);
+        }
+      break;
+     }
+   return false;
+  }
