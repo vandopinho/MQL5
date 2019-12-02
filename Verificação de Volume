@@ -1,0 +1,24 @@
+bool VerificacaoDeVolume(double volume)
+  {
+   double min_volume=SymbolInfoDouble(Symbol(),SYMBOL_VOLUME_MIN);
+   if(volume<min_volume)
+     {
+      SendMail("Erro no volume atual da conta: "+ IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)), "Volume inferior ao mínimo permitido SYMBOL_VOLUME_MIN: "+DoubleToString(min_volume));
+      return(false);
+     }
+
+   double max_volume=SymbolInfoDouble(Symbol(),SYMBOL_VOLUME_MAX);
+   if(volume>max_volume)
+     {
+      SendMail("Erro no volume atual da conta: "+ IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)), "Volume inferior ao mínimo permitido SYMBOL_VOLUME_MAX: "+DoubleToString(max_volume));
+      return(false);
+     }
+   double volume_step=SymbolInfoDouble(Symbol(),SYMBOL_VOLUME_STEP);
+   int ratio=(int)MathRound(volume/volume_step);
+   if(MathAbs(ratio*volume_step-volume)>0.0000001)
+     {
+      SendMail("Erro na gradação de volume da conta: "+ IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)), "O volume não é múltiplo da gradação mínima SYMBOL_VOLUME_STEP : " + DoubleToString(volume_step) + ", O volume mais próximo do valido é: "+ DoubleToString(ratio*volume_step));
+      return(false);
+     }
+   return(true);
+  }
