@@ -1,0 +1,20 @@
+bool VerificacaoDeMargem(string symb,double lots,ENUM_ORDER_TYPE type)
+  {
+   MqlTick mqltick;
+   SymbolInfoTick(symb,mqltick);
+   double price=mqltick.ask;
+   if(type==ORDER_TYPE_SELL)
+      price=mqltick.bid;
+   double margin,free_margin=AccountInfoDouble(ACCOUNT_MARGIN_FREE);
+   if(!OrderCalcMargin(type,symb,lots,price,margin))
+     {
+      SendMail("Erro na checagem de Margem da conta: " +IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) ,"Erro na "+ __FUNCTION__);
+      return(false);
+     }
+   if(margin>free_margin)
+     {
+      SendMail("A conta: " + IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN)) + " está com problema de margem", "A verificação de freemargin apontou que esta conta está impossibilitada de lançar ordem");
+      return(false);
+     }
+   return(true);
+  }
